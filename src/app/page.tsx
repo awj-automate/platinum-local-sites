@@ -17,7 +17,9 @@ function useMousePosition() {
     let raf = 0;
     const handler = (e: MouseEvent) => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setPos({ x: e.clientX, y: e.clientY }));
+      raf = requestAnimationFrame(() =>
+        setPos({ x: e.clientX, y: e.clientY })
+      );
     };
     window.addEventListener("mousemove", handler);
     return () => {
@@ -155,7 +157,8 @@ function useTiltCard() {
   const handleLeave = useCallback(() => {
     const el = ref.current;
     if (!el) return;
-    el.style.transform = "perspective(800px) rotateX(0) rotateY(0) scale3d(1,1,1)";
+    el.style.transform =
+      "perspective(800px) rotateX(0) rotateY(0) scale3d(1,1,1)";
   }, []);
 
   return { ref, handleMove, handleLeave };
@@ -230,7 +233,7 @@ function RippleButton({
       target="_blank"
       rel="noopener noreferrer"
       onClick={handleClick}
-      className={`btn-shimmer ${className}`}
+      className={`btn-shimmer elastic-press ${className}`}
     >
       {children}
     </a>
@@ -308,7 +311,9 @@ function FAQ({
   onClick: () => void;
 }) {
   return (
-    <div className={`border-b border-gray-200 faq-item ${open ? "active" : ""}`}>
+    <div
+      className={`border-b border-gray-200 faq-item ${open ? "active" : ""}`}
+    >
       <button
         onClick={onClick}
         className="w-full flex justify-between items-center py-5 text-left cursor-pointer"
@@ -352,6 +357,8 @@ export default function Home() {
   );
 
   const priceCounter = useAnimatedCounter(99, 1200);
+  const daysCounter = useAnimatedCounter(3, 800);
+  const clientsCounter = useAnimatedCounter(200, 2000);
 
   const faqs = [
     {
@@ -484,13 +491,13 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f8f9fb]">
       {/* ── Cursor Glow ── */}
-      <div
-        className="cursor-glow"
-        style={{ left: mouse.x, top: mouse.y }}
-      />
+      <div className="cursor-glow" style={{ left: mouse.x, top: mouse.y }} />
 
       {/* ── Scroll Progress ── */}
-      <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
+      <div
+        className="scroll-progress"
+        style={{ width: `${scrollProgress}%` }}
+      />
 
       {/* ── Nav ── */}
       <nav
@@ -499,7 +506,10 @@ export default function Home() {
         }`}
       >
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="/" className="text-xl font-bold tracking-tight">
+          <a
+            href="/"
+            className="text-xl font-bold tracking-tight animated-underline"
+          >
             <span className="text-shimmer">Platinum</span>
             <span className="text-teal-600"> Local Sites</span>
           </a>
@@ -508,7 +518,7 @@ export default function Home() {
               href={CALENDLY}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-5 py-2.5 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors"
+              className="inline-flex items-center px-5 py-2.5 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors elastic-press"
             >
               Book a Free Call
             </a>
@@ -520,7 +530,7 @@ export default function Home() {
       <header className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 hero-mesh overflow-hidden">
         {/* Mesh gradient blobs */}
         <div
-          className="hero-mesh-blob opacity-25"
+          className="hero-mesh-blob opacity-25 morph-blob"
           style={{
             width: 600,
             height: 600,
@@ -531,7 +541,7 @@ export default function Home() {
           }}
         />
         <div
-          className="hero-mesh-blob opacity-20"
+          className="hero-mesh-blob opacity-20 morph-blob"
           style={{
             width: 500,
             height: 500,
@@ -543,7 +553,7 @@ export default function Home() {
           }}
         />
         <div
-          className="hero-mesh-blob opacity-15"
+          className="hero-mesh-blob opacity-15 morph-blob"
           style={{
             width: 400,
             height: 400,
@@ -554,17 +564,51 @@ export default function Home() {
             animation: "meshMove3 18s ease-in-out infinite",
           }}
         />
+        {/* Extra breathing blob */}
+        <div
+          className="hero-mesh-blob breathe"
+          style={{
+            width: 300,
+            height: 300,
+            top: "10%",
+            left: "20%",
+            background:
+              "radial-gradient(circle, rgba(13,148,136,0.1), transparent 70%)",
+            filter: "blur(100px)",
+          }}
+        />
+
+        {/* Floating decorative dots */}
+        {[
+          { top: "15%", left: "80%", size: 6, delay: "0s" },
+          { top: "60%", left: "85%", size: 4, delay: "2s" },
+          { top: "30%", left: "90%", size: 8, delay: "1s" },
+          { top: "75%", left: "75%", size: 5, delay: "3s" },
+        ].map((dot, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              top: dot.top,
+              left: dot.left,
+              width: dot.size,
+              height: dot.size,
+              background: i % 2 === 0 ? "rgba(13,148,136,0.3)" : "rgba(184,184,194,0.4)",
+              animation: `dotFloat 4s ease-in-out ${dot.delay} infinite`,
+            }}
+          />
+        ))}
 
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="max-w-3xl">
             {/* Badge */}
             <div className="slide-in-left inline-flex items-center gap-2 px-4 py-1.5 bg-teal-50 text-teal-700 text-sm font-medium rounded-full mb-6 border border-teal-100">
-              <span className="w-2 h-2 bg-teal-500 rounded-full animate-pulse" />
+              <span className="w-2 h-2 bg-teal-500 rounded-full glow-ring" />
               Now accepting new clients
             </div>
 
             {/* Hero heading with typewriter */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.1] tracking-tight mb-6">
+            <h1 className="blur-in text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.1] tracking-tight mb-6">
               A Website That Actually{" "}
               <span className="gradient-text">
                 {started ? displayed : ""}
@@ -574,7 +618,7 @@ export default function Home() {
               </span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-8 max-w-2xl">
+            <p className="blur-in blur-in-delay-2 text-lg sm:text-xl text-gray-600 leading-relaxed mb-8 max-w-2xl">
               Most local business websites sit there doing nothing. We build
               sites that show up when people search for your service — and turn
               visitors into paying customers. From{" "}
@@ -582,7 +626,7 @@ export default function Home() {
               <strong className="text-gray-900">2-3 days</strong>.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="blur-in blur-in-delay-3 flex flex-col sm:flex-row gap-4">
               <RippleButton
                 href={CALENDLY}
                 className="inline-flex items-center justify-center px-8 py-4 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition-all hover:shadow-lg hover:shadow-teal-600/20 text-lg"
@@ -604,24 +648,43 @@ export default function Home() {
               </RippleButton>
               <a
                 href="#pricing"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#d8d8de] text-gray-700 font-semibold rounded-xl hover:border-teal-300 hover:bg-white transition-all text-lg"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#d8d8de] text-gray-700 font-semibold rounded-xl hover:border-teal-300 hover:bg-white transition-all text-lg elastic-press"
               >
                 See Pricing
               </a>
             </div>
 
             <div className="flex items-center gap-6 mt-10 text-sm text-gray-500">
-              <span className="flex items-center gap-1.5">
-                <CheckIcon /> No contracts
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckIcon /> Cancel anytime
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckIcon /> 2-3 day delivery
-              </span>
+              {[
+                "No contracts",
+                "Cancel anytime",
+                "2-3 day delivery",
+              ].map((text, i) => (
+                <span
+                  key={text}
+                  className={`trust-badge flex items-center gap-1.5`}
+                  style={{ animationDelay: `${1 + i * 0.15}s` }}
+                >
+                  <CheckIcon /> {text}
+                </span>
+              ))}
             </div>
           </div>
+        </div>
+
+        {/* Wave divider at bottom of hero */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg
+            viewBox="0 0 1440 60"
+            fill="none"
+            className="w-full h-[40px] block"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,48 1440,30 L1440,60 L0,60 Z"
+              fill="white"
+            />
+          </svg>
         </div>
       </header>
 
@@ -629,10 +692,11 @@ export default function Home() {
       <Section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 slide-up">
               Your Website Is Costing You Customers
             </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <span className="heading-line" />
+            <p className="text-lg text-gray-600 leading-relaxed mt-4 slide-up" style={{ animationDelay: "0.2s" }}>
               If your site is slow, looks outdated, or doesn&apos;t show up when
               people search for what you do — you&apos;re losing business every
               single day.
@@ -641,8 +705,8 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {problemItems.map((item, i) => (
               <TiltCard key={item.title} delay={i * 0.15}>
-                <div className="bg-[#f8f9fb] rounded-2xl p-8 border border-[#e8e8ee] h-full">
-                  <div className="w-12 h-12 bg-amber-50 border border-amber-100 rounded-xl flex items-center justify-center mb-5 icon-container">
+                <div className="bg-[#f8f9fb] rounded-2xl p-8 border border-[#e8e8ee] h-full glow-border-hover hover-lift">
+                  <div className="w-12 h-12 bg-amber-50 border border-amber-100 rounded-xl flex items-center justify-center mb-5 icon-container hover-wobble">
                     <svg
                       className="w-6 h-6 text-amber-600 icon-draw"
                       fill="none"
@@ -668,22 +732,57 @@ export default function Home() {
         </div>
       </Section>
 
+      {/* ── Stats bar ── */}
+      <Section className="py-12 bg-[#f8f9fb] relative">
+        <div className="shimmer-bar absolute top-0 left-0 right-0" />
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="grid grid-cols-3 gap-8 text-center">
+            <div className="scale-in" style={{ animationDelay: "0s" }}>
+              <span
+                ref={clientsCounter.ref}
+                className="text-4xl sm:text-5xl font-extrabold text-teal-600 number-glow"
+              >
+                {clientsCounter.value}+
+              </span>
+              <p className="text-gray-500 mt-1 text-sm sm:text-base">Sites Built</p>
+            </div>
+            <div className="scale-in" style={{ animationDelay: "0.15s" }}>
+              <span
+                ref={daysCounter.ref}
+                className="text-4xl sm:text-5xl font-extrabold text-teal-600 number-glow"
+              >
+                {daysCounter.value}
+              </span>
+              <p className="text-gray-500 mt-1 text-sm sm:text-base">Day Avg. Delivery</p>
+            </div>
+            <div className="scale-in" style={{ animationDelay: "0.3s" }}>
+              <span className="text-4xl sm:text-5xl font-extrabold text-teal-600 number-glow">
+                $0
+              </span>
+              <p className="text-gray-500 mt-1 text-sm sm:text-base">Setup Fee</p>
+            </div>
+          </div>
+        </div>
+        <div className="shimmer-bar absolute bottom-0 left-0 right-0" />
+      </Section>
+
       {/* ── What You Get ── */}
       <Section className="py-20" id="features">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 slide-up">
               Everything You Need. Nothing You Don&apos;t.
             </h2>
-            <p className="text-lg text-gray-600">
+            <span className="heading-line" />
+            <p className="text-lg text-gray-600 mt-4 slide-up" style={{ animationDelay: "0.2s" }}>
               One simple plan. Everything handled for you.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featureItems.map((item, i) => (
               <TiltCard key={item.title} delay={i * 0.1}>
-                <div className="bg-white rounded-2xl p-7 border border-[#e8e8ee] hover:shadow-lg hover:shadow-teal-600/5 transition-all duration-300 h-full">
-                  <div className="w-11 h-11 bg-teal-50 rounded-xl flex items-center justify-center mb-4 icon-container">
+                <div className="bg-white rounded-2xl p-7 border border-[#e8e8ee] hover:shadow-lg hover:shadow-teal-600/5 transition-all duration-300 h-full glow-border-hover">
+                  <div className="w-11 h-11 bg-teal-50 rounded-xl flex items-center justify-center mb-4 icon-container hover-wobble">
                     <svg
                       className="w-5 h-5 text-teal-600"
                       fill="none"
@@ -712,12 +811,27 @@ export default function Home() {
       </Section>
 
       {/* ── How It Works ── */}
-      <Section className="py-20 bg-white">
+      <Section className="py-20 bg-white relative">
+        {/* Wave at top */}
+        <div className="absolute top-0 left-0 right-0 rotate-180">
+          <svg
+            viewBox="0 0 1440 60"
+            fill="none"
+            className="w-full h-[40px] block"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,48 1440,30 L1440,60 L0,60 Z"
+              fill="#f8f9fb"
+            />
+          </svg>
+        </div>
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 slide-up">
               Three Steps. That&apos;s It.
             </h2>
+            <span className="heading-line" />
           </div>
           <div className="relative max-w-4xl mx-auto">
             {/* Connecting line (desktop only) */}
@@ -728,19 +842,33 @@ export default function Home() {
               {steps.map((item, i) => (
                 <div key={item.step} className="text-center relative z-10">
                   <div
-                    className="bounce-in w-14 h-14 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-5 shadow-lg shadow-teal-600/20"
+                    className="bounce-in w-14 h-14 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-5 shadow-lg shadow-teal-600/20 hover-wobble"
                     style={{ animationDelay: `${i * 0.2}s` }}
                   >
                     {item.step}
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 slide-up" style={{ animationDelay: `${0.3 + i * 0.15}s` }}>
                     {item.title}
                   </h3>
-                  <p className="text-gray-600">{item.desc}</p>
+                  <p className="text-gray-600 slide-up" style={{ animationDelay: `${0.4 + i * 0.15}s` }}>{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
+        </div>
+        {/* Wave at bottom */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg
+            viewBox="0 0 1440 60"
+            fill="none"
+            className="w-full h-[40px] block"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,48 1440,30 L1440,60 L0,60 Z"
+              fill="#f8f9fb"
+            />
+          </svg>
         </div>
       </Section>
 
@@ -748,10 +876,11 @@ export default function Home() {
       <Section className="py-20" id="pricing">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 slide-up">
               Simple, Honest Pricing
             </h2>
-            <p className="text-lg text-gray-600">
+            <span className="heading-line" />
+            <p className="text-lg text-gray-600 mt-4 slide-up" style={{ animationDelay: "0.2s" }}>
               No hidden fees. No contracts. No surprises.
             </p>
           </div>
@@ -767,7 +896,7 @@ export default function Home() {
                       <span className="text-lg text-gray-500 mr-0.5">$</span>
                       <span
                         ref={priceCounter.ref}
-                        className="text-5xl font-extrabold text-gray-900"
+                        className="text-5xl font-extrabold text-gray-900 number-glow"
                       >
                         {priceCounter.value}
                       </span>
@@ -803,17 +932,32 @@ export default function Home() {
       </Section>
 
       {/* ── Testimonials ── */}
-      <Section className="py-20 bg-white">
+      <Section className="py-20 bg-white relative">
+        {/* Wave at top */}
+        <div className="absolute top-0 left-0 right-0 rotate-180">
+          <svg
+            viewBox="0 0 1440 60"
+            fill="none"
+            className="w-full h-[40px] block"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,48 1440,30 L1440,60 L0,60 Z"
+              fill="#f8f9fb"
+            />
+          </svg>
+        </div>
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 slide-up">
               Trusted by Local Businesses
             </h2>
+            <span className="heading-line" />
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((t, idx) => (
               <TiltCard key={t.name} delay={idx * 0.15}>
-                <div className="bg-[#f8f9fb] rounded-2xl p-8 border border-[#e8e8ee] relative quote-card hover:shadow-xl hover:shadow-teal-600/5 transition-all duration-300 h-full">
+                <div className="bg-[#f8f9fb] rounded-2xl p-8 border border-[#e8e8ee] relative quote-card hover:shadow-xl hover:shadow-teal-600/5 transition-all duration-300 h-full glow-border-hover hover-lift">
                   <div className="flex gap-1 mb-4">
                     {[1, 2, 3, 4, 5].map((i) => (
                       <svg
@@ -845,9 +989,10 @@ export default function Home() {
       <Section className="py-20" id="faq">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 slide-up">
               Common Questions
             </h2>
+            <span className="heading-line" />
           </div>
           <div>
             {faqs.map((faq, i) => (
@@ -867,7 +1012,7 @@ export default function Home() {
       <Section className="py-20 bg-[#1e1e2e] relative overflow-hidden">
         {/* Dark mesh blobs */}
         <div
-          className="absolute rounded-full pointer-events-none opacity-20"
+          className="absolute rounded-full pointer-events-none opacity-20 morph-blob"
           style={{
             width: 400,
             height: 400,
@@ -880,7 +1025,7 @@ export default function Home() {
           }}
         />
         <div
-          className="absolute rounded-full pointer-events-none opacity-15"
+          className="absolute rounded-full pointer-events-none opacity-15 morph-blob"
           style={{
             width: 350,
             height: 350,
@@ -892,15 +1037,32 @@ export default function Home() {
             animation: "darkMesh2 18s ease-in-out infinite",
           }}
         />
+        {/* Extra center blob */}
+        <div
+          className="absolute rounded-full pointer-events-none breathe"
+          style={{
+            width: 250,
+            height: 250,
+            top: "20%",
+            left: "40%",
+            background:
+              "radial-gradient(circle, rgba(13,148,136,0.15), transparent 70%)",
+            filter: "blur(80px)",
+          }}
+        />
 
-        {/* Floating particles */}
+        {/* Floating particles - more of them */}
         {[
-          { left: "10%", bottom: "10%", size: 4, dur: "6s", delay: "0s", bg: "rgba(13,148,136,0.5)" },
-          { left: "25%", bottom: "5%", size: 3, dur: "8s", delay: "1s", bg: "rgba(184,184,194,0.4)" },
-          { left: "50%", bottom: "15%", size: 5, dur: "7s", delay: "2s", bg: "rgba(13,148,136,0.4)" },
-          { left: "70%", bottom: "8%", size: 3, dur: "9s", delay: "0.5s", bg: "rgba(184,184,194,0.5)" },
-          { left: "85%", bottom: "12%", size: 4, dur: "6.5s", delay: "3s", bg: "rgba(13,148,136,0.3)" },
-          { left: "40%", bottom: "20%", size: 2, dur: "10s", delay: "1.5s", bg: "rgba(237,237,240,0.3)" },
+          { left: "5%", bottom: "10%", size: 4, dur: "6s", delay: "0s", bg: "rgba(13,148,136,0.5)" },
+          { left: "15%", bottom: "5%", size: 3, dur: "8s", delay: "1s", bg: "rgba(184,184,194,0.4)" },
+          { left: "30%", bottom: "15%", size: 5, dur: "7s", delay: "2s", bg: "rgba(13,148,136,0.4)" },
+          { left: "45%", bottom: "8%", size: 3, dur: "9s", delay: "0.5s", bg: "rgba(184,184,194,0.5)" },
+          { left: "60%", bottom: "12%", size: 4, dur: "6.5s", delay: "3s", bg: "rgba(13,148,136,0.3)" },
+          { left: "75%", bottom: "20%", size: 2, dur: "10s", delay: "1.5s", bg: "rgba(237,237,240,0.3)" },
+          { left: "90%", bottom: "6%", size: 3, dur: "7.5s", delay: "0.8s", bg: "rgba(13,148,136,0.4)" },
+          { left: "20%", bottom: "25%", size: 2, dur: "11s", delay: "2.5s", bg: "rgba(184,184,194,0.3)" },
+          { left: "55%", bottom: "3%", size: 4, dur: "5.5s", delay: "1.2s", bg: "rgba(13,148,136,0.35)" },
+          { left: "80%", bottom: "18%", size: 3, dur: "8.5s", delay: "3.5s", bg: "rgba(237,237,240,0.25)" },
         ].map((p, i) => (
           <div
             key={i}
@@ -917,12 +1079,13 @@ export default function Home() {
         ))}
 
         <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 text-reveal">
             Ready to Stop Losing Customers?
           </h2>
-          <p className="text-lg text-[#9898a6] mb-8 max-w-xl mx-auto">
+          <p className="text-lg text-[#9898a6] mb-8 max-w-xl mx-auto text-reveal" style={{ animationDelay: "0.3s" }}>
             Book a free 15-minute call. We&apos;ll look at your current site,
-            show you what&apos;s not working, and have your new one live in days.
+            show you what&apos;s not working, and have your new one live in
+            days.
           </p>
           <RippleButton
             href={CALENDLY}

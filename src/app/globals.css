@@ -70,7 +70,7 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer 3s linear infinite;
+  animation: shimmer 8s linear infinite;
 }
 
 .gradient-text {
@@ -79,7 +79,7 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer 3s linear infinite;
+  animation: shimmer 8s linear infinite;
 }
 
 /* ═══════════════════════════════════════════
@@ -197,7 +197,7 @@ html {
   width: 50%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-  animation: btnShimmer 3s ease-in-out infinite;
+  animation: btnShimmer 6s ease-in-out infinite;
   pointer-events: none;
 }
 
@@ -582,3 +582,326 @@ html {
 .visible .checklist-item {
   animation: fadeSlideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* ═══════════════════════════════════════════
+   TEXT REVEAL ON SCROLL
+   ═══════════════════════════════════════════ */
+
+@keyframes textReveal {
+  from { clip-path: inset(0 100% 0 0); opacity: 0; }
+  to { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+.text-reveal {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+}
+
+.visible .text-reveal {
+  animation: textReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════
+   SCALE-IN REVEAL
+   ═══════════════════════════════════════════ */
+
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; filter: blur(10px); }
+  to { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+
+.scale-in {
+  opacity: 0;
+}
+
+.visible .scale-in {
+  animation: scaleIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════
+   ROTATE-IN (for decorative elements)
+   ═══════════════════════════════════════════ */
+
+@keyframes rotateIn {
+  from { transform: rotate(-180deg) scale(0); opacity: 0; }
+  to { transform: rotate(0) scale(1); opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════
+   SUBTLE HOVER LIFT (cards and interactive elements)
+   ═══════════════════════════════════════════ */
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(13, 148, 136, 0.06);
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATED UNDERLINE ON HOVER
+   ═══════════════════════════════════════════ */
+
+.animated-underline {
+  position: relative;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0d9488, #b8b8c2);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════════
+   GLOW RING (hero badge, pricing badge)
+   ═══════════════════════════════════════════ */
+
+@keyframes glowRing {
+  0% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(13, 148, 136, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
+}
+
+.glow-ring {
+  animation: glowRing 2s ease-out infinite;
+}
+
+/* ═══════════════════════════════════════════
+   COUNTER FLASH (when counter finishes)
+   ═══════════════════════════════════════════ */
+
+@keyframes counterFlash {
+  0% { text-shadow: 0 0 0 transparent; }
+  50% { text-shadow: 0 0 20px rgba(13, 148, 136, 0.4); }
+  100% { text-shadow: 0 0 0 transparent; }
+}
+
+/* ═══════════════════════════════════════════
+   WOBBLE (for attention-grabbing elements)
+   ═══════════════════════════════════════════ */
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(3deg); }
+  30% { transform: rotate(-3deg); }
+  45% { transform: rotate(2deg); }
+  60% { transform: rotate(-1deg); }
+  75% { transform: rotate(0.5deg); }
+}
+
+.hover-wobble:hover {
+  animation: wobble 0.6s ease;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION DIVIDER WAVE
+   ═══════════════════════════════════════════ */
+
+.wave-divider {
+  position: relative;
+}
+
+.wave-divider::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40'%3E%3Cpath fill='%23ffffff' d='M0,20 C360,40 720,0 1080,20 C1260,30 1380,35 1440,20 L1440,40 L0,40 Z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: cover;
+  pointer-events: none;
+}
+
+.wave-divider-dark::after {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40'%3E%3Cpath fill='%23f8f9fb' d='M0,20 C360,40 720,0 1080,20 C1260,30 1380,35 1440,20 L1440,40 L0,40 Z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: cover;
+}
+
+/* ═══════════════════════════════════════════
+   BREATHING GLOW (subtle ambient effect)
+   ═══════════════════════════════════════════ */
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+.breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════
+   SLIDE-UP REVEAL (for text blocks)
+   ═══════════════════════════════════════════ */
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.slide-up {
+  opacity: 0;
+}
+
+.visible .slide-up {
+  animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════
+   ELASTIC SCALE (for interactive touches)
+   ═══════════════════════════════════════════ */
+
+.elastic-press:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+/* ═══════════════════════════════════════════
+   NUMBER HIGHLIGHT GLOW
+   ═══════════════════════════════════════════ */
+
+@keyframes numberGlow {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  50% { text-shadow: 0 0 30px rgba(13, 148, 136, 0.3), 0 0 60px rgba(13, 148, 136, 0.1); }
+}
+
+.number-glow {
+  animation: numberGlow 3s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION HEADING UNDERLINE
+   ═══════════════════════════════════════════ */
+
+@keyframes expandLine {
+  from { width: 0; }
+  to { width: 60px; }
+}
+
+.heading-line {
+  display: block;
+  height: 3px;
+  width: 0;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, #0d9488, #b8b8c2);
+  border-radius: 2px;
+}
+
+.visible .heading-line {
+  animation: expandLine 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+
+/* ═══════════════════════════════════════════
+   MORPH BLOB (decorative background)
+   ═══════════════════════════════════════════ */
+
+@keyframes morphBlob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 40% / 40% 70% 50% 60%; }
+  75% { border-radius: 40% 50% 60% 30% / 60% 40% 60% 50%; }
+}
+
+.morph-blob {
+  animation: morphBlob 12s ease-in-out infinite;
+  will-change: border-radius;
+}
+
+/* ═══════════════════════════════════════════
+   GRADIENT BORDER GLOW ON HOVER
+   ═══════════════════════════════════════════ */
+
+.glow-border-hover {
+  position: relative;
+  transition: box-shadow 0.4s ease;
+}
+
+.glow-border-hover:hover {
+  box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.2),
+              0 0 20px rgba(13, 148, 136, 0.08),
+              0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+/* ═══════════════════════════════════════════
+   SPIN-IN (for decorative icons)
+   ═══════════════════════════════════════════ */
+
+@keyframes spinIn {
+  from { transform: rotate(-90deg) scale(0); opacity: 0; }
+  to { transform: rotate(0) scale(1); opacity: 1; }
+}
+
+.visible .spin-in {
+  animation: spinIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════
+   SHIMMER BAR (decorative loading effect)
+   ═══════════════════════════════════════════ */
+
+@keyframes shimmerBar {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-bar {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #0d9488, #b8b8c2, #0d9488, transparent);
+  background-size: 200% 100%;
+  animation: shimmerBar 3s linear infinite;
+}
+
+/* ═══════════════════════════════════════════
+   FLOATING DOTS BACKGROUND
+   ═══════════════════════════════════════════ */
+
+@keyframes dotFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.15; }
+  50% { transform: translateY(-15px) rotate(180deg); opacity: 0.3; }
+}
+
+/* ═══════════════════════════════════════════
+   TRUST BADGE ENTER
+   ═══════════════════════════════════════════ */
+
+@keyframes trustBadgeIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.trust-badge {
+  opacity: 0;
+  animation: trustBadgeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ═══════════════════════════════════════════
+   HERO TEXT BLUR-IN
+   ═══════════════════════════════════════════ */
+
+@keyframes blurIn {
+  from { opacity: 0; filter: blur(12px); transform: translateY(15px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+.blur-in {
+  animation: blurIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.blur-in-delay-1 { animation-delay: 0.1s; }
+.blur-in-delay-2 { animation-delay: 0.25s; }
+.blur-in-delay-3 { animation-delay: 0.4s; }
+.blur-in-delay-4 { animation-delay: 0.6s; }
+.blur-in-delay-5 { animation-delay: 0.8s; }
