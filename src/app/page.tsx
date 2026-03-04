@@ -631,7 +631,7 @@ export default function Home() {
                 href={CALENDLY}
                 className="inline-flex items-center justify-center px-8 py-4 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition-all hover:shadow-lg hover:shadow-teal-600/20 text-lg"
               >
-                Get Started — It&apos;s Free to Talk
+                Get Started
                 <svg
                   className="w-5 h-5 ml-2"
                   fill="none"
