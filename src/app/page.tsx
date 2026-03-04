@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
-const CALENDLY =
-  "https://calendly.com/john-automate-with-john/free-website-audit";
+const BOOK_URL = "/book";
 
 /* ═══════════════════════════════════════════
    HOOKS
@@ -207,10 +206,12 @@ function RippleButton({
   href,
   children,
   className = "",
+  external = false,
 }: {
   href: string;
   children: React.ReactNode;
   className?: string;
+  external?: boolean;
 }) {
   const btnRef = useRef<HTMLAnchorElement>(null);
 
@@ -230,8 +231,7 @@ function RippleButton({
     <a
       ref={btnRef}
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       onClick={handleClick}
       className={`btn-shimmer elastic-press ${className}`}
     >
@@ -515,9 +515,7 @@ export default function Home() {
           </a>
           <MagneticButton className="hidden sm:block">
             <a
-              href={CALENDLY}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={BOOK_URL}
               className="inline-flex items-center px-5 py-2.5 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors elastic-press"
             >
               Book a Free Call
@@ -628,7 +626,7 @@ export default function Home() {
 
             <div className="blur-in blur-in-delay-3 flex flex-col sm:flex-row gap-4">
               <RippleButton
-                href={CALENDLY}
+                href={BOOK_URL}
                 className="inline-flex items-center justify-center px-8 py-4 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition-all hover:shadow-lg hover:shadow-teal-600/20 text-lg"
               >
                 Get Started
@@ -919,7 +917,7 @@ export default function Home() {
                     ))}
                   </ul>
                   <RippleButton
-                    href={CALENDLY}
+                    href={BOOK_URL}
                     className="block w-full text-center px-8 py-4 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition-all hover:shadow-lg text-lg"
                   >
                     Book Your Free Call
@@ -1088,7 +1086,7 @@ export default function Home() {
             days.
           </p>
           <RippleButton
-            href={CALENDLY}
+            href={BOOK_URL}
             className="inline-flex items-center justify-center px-10 py-4 bg-teal-500 text-white font-semibold rounded-xl hover:bg-teal-400 transition-all hover:shadow-lg hover:shadow-teal-500/25 text-lg pulse-glow"
           >
             Book Your Free Call
