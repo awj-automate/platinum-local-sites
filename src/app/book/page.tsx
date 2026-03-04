@@ -53,7 +53,7 @@ export default function BookPage() {
           <div
             className="calendly-inline-widget"
             data-url={CALENDLY_URL}
-            style={{ minWidth: 280, height: 700 }}
+            style={{ minWidth: 280, height: 1100 }}
           />
         </div>
       </div>
